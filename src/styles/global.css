@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-velo-green: #4EAE4E;
+
+  --animate-text-slider: slide 25s linear infinite;
+
+  @keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%)
+    }
+  }
+}
