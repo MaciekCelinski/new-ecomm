@@ -1,5 +1,3 @@
-// import { Link } from 'react-router-dom';
-
 interface Subcategory {
   slug: string;
   name: string;
@@ -11,7 +9,7 @@ interface MenuProps {
   subcategories: Subcategory[];
 }
 
-const Menu = ({ toggleMenu, subcategories }: MenuProps) => {
+const DesktopMegaMenu = ({ toggleMenu, subcategories }: MenuProps) => {
   return (
     <div
       className="absolute h-80 w-full border-y-1 border-gray-300 bg-white z-40 p-6 grid grid-cols-5"
@@ -26,4 +24,4 @@ const Menu = ({ toggleMenu, subcategories }: MenuProps) => {
   );
 };
 
-export default Menu;
+export default DesktopMegaMenu;

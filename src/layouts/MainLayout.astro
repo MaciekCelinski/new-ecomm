@@ -1,8 +1,10 @@
 ---
-import Navigation from "../components/Navigation.astro";
-import NavigationCategories from "../components/NavigationCategories";
-import Umbrella from "../components/Umbrella.astro";
+import Navigation from "../components/Navigation/Navigation.astro";
+import NavigationCategories from "../components/Navigation/DesktopCategories";
 import "../styles/global.css";
+import Umbrella from "../components/Umbrella.astro";
+import MobileMegaMenu from "../components/Navigation/MobileMegaMenu";
+
 const { title = "page title" } = Astro.props;
 
 interface Props {
@@ -36,6 +38,7 @@ const subcategories = await subcategoryResponse.json();
         height: 2000px;
         background-color: gainsboro;
       }
+
       nav {
         position: sticky;
         top: 0;
@@ -43,37 +46,16 @@ const subcategories = await subcategoryResponse.json();
     </style>
   </head>
   <body>
+    <MobileMegaMenu subcategories={subcategories} client:only />
     <Umbrella />
-    <nav class="z-50">
-      <Navigation />
-      <NavigationCategories
-        client:only
-        categories={categories}
-        subcategories={subcategories}
-      >
-        <!-- <div slot="fallback">
-          <div role="status" class="max-w-sm animate-pulse">
-            <div
-              class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
-            >
-            </div>
-          </div>.
-        </div> -->
-        <div slot="fallback">
-          <div class="w-full h-12 px-[15%] -mt-1 bg-white">
-            <div class="w-full h-full flex">
-              <div
-                role="status"
-                class="w-full flex justify-center items-center animate-pulse"
-              >
-                <div class="h-5 bg-gray-100 rounded-sm dark:bg-gray-200 w-full">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </NavigationCategories>
+    <nav class="z-30">
+      <Navigation categories={categories} subcategories={subcategories} />
     </nav>
     <slot />
+    <script>
+      import { isMobile } from "../stores/NavigationStore";
+      const screenWidth = window?.screen.width;
+      if (screenWidth) isMobile.set(screenWidth > 768 ? false : true);
+    </script>
   </body>
 </html>

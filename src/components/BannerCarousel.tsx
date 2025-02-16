@@ -113,21 +113,22 @@ const ImageCarousel = () => {
     <div className="overflow-hidden relative items">
       <div
         className="flex transition ease-out duration-400 "
-        style={{
-          transform: `translateX(-${current * 100}%)`,
-        }}
+        // style={{
+        //   transform: `translateX(-${current * 100}%)`,
+        // }}
       >
-        {slides.map((slide, index) => {
+        {/* {slides.map((slide, index) => {
           return <img src={slide.imageUrl} key={index} />;
-        })}
+        })} */}
+        <img src={slides[current].imageUrl} />;
       </div>
 
       <div className="hidden md:flex absolute top-0 h-full w-full justify-between items-center text-white px-5 text-3xl">
         <button onClick={previousSlide}>
-          <FaAngleLeft className="cursor-pointer"/>
+          <FaAngleLeft className="cursor-pointer" />
         </button>
         <button onClick={nextSlide}>
-          <FaAngleRight className="cursor-pointer"/>
+          <FaAngleRight className="cursor-pointer" />
         </button>
       </div>
 

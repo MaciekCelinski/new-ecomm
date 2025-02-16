@@ -1,0 +1,71 @@
+---
+import SearchInput from "../SearchInput.astro";
+import DesktopCategories from "./DesktopCategories";
+import NavigationIcons from "./NavigationIcons";
+
+const { categories, subcategories } = Astro.props;
+---
+
+<div id="mobile-navigation" class="block md:hidden">
+  <div
+    class="w-full flex flex-col justify-center items-center pt-3 bg-white border-b-1"
+  >
+    <div class="w-full flex justify-evenly items-center">
+      <div class="w-full flex justify-start pl-3">
+        <a href="/">
+          <img
+            src="https://velomarket.pl/media/logo/stores/1/velo_logo.png"
+            class="max-h-8 cursor-pointer"
+            alt="logo"
+          />
+        </a>
+      </div>
+      <NavigationIcons client:load />
+    </div>
+    <div class="flex justify-center py-3 w-3/4">
+      <SearchInput />
+    </div>
+  </div>
+</div>
+<div id="desktop-navigation" class="hidden md:block">
+  <div
+    class="absulte w-full h-17 flex justify-center items-center bg-white border-b-1"
+  >
+    <div class="w-full flex justify-evenly items-center">
+      <div class="w-full flex justify-start pl-10">
+        <a href="/">
+          <img
+            src="https://velomarket.pl/media/logo/stores/1/velo_logo.png"
+            class="max-h-8 cursor-pointer"
+            alt="logo"
+          />
+        </a>
+      </div>
+      <div class="w-full flex justify-center">
+        <SearchInput />
+      </div>
+      <NavigationIcons client:load />
+    </div>
+  </div>
+  <div>
+    <DesktopCategories
+      client:only
+      categories={categories}
+      subcategories={subcategories}
+    >
+      <div slot="fallback">
+        <div class="w-full h-12 px-[15%] -mt-1 bg-white">
+          <div class="w-full h-full flex">
+            <div
+              role="status"
+              class="w-full flex justify-center items-center animate-pulse"
+            >
+              <div class="w-full h-5 bg-gray-100 rounded-sm dark:bg-gray-200">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DesktopCategories>
+  </div>
+</div>
