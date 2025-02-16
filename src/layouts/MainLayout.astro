@@ -53,9 +53,9 @@ const subcategories = await subcategoryResponse.json();
     </nav>
     <slot />
     <script>
-      import { isMobile } from "../stores/NavigationStore";
-      const screenWidth = window?.screen.width;
-      if (screenWidth) isMobile.set(screenWidth > 768 ? false : true);
+      import { setIsMobile } from "../utils/ClientUtils";
+
+      setIsMobile();
     </script>
   </body>
 </html>

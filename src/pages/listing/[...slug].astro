@@ -1,5 +1,13 @@
 ---
+import MainLayout from "../../layouts/MainLayout.astro";
+
 const { slug } = Astro.params;
+
+const response = await fetch(`https://dummyjson.com/products/category/${slug}`);
+const results = await response.json();
 ---
 
-<p>{slug}</p>
+<MainLayout title={slug}>
+  <h1 class="text-3xl uppercase">{slug}</h1>
+  {results.products.map((result: any) => <p>{result.id} - {result.title} - {result.category}</p>)}
+</MainLayout>
