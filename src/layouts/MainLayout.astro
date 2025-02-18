@@ -1,10 +1,8 @@
 ---
-import Navigation from "../components/Navigation/Navigation.astro";
-import NavigationCategories from "../components/Navigation/DesktopCategories2";
 import "../styles/global.css";
+
+import Navigation from "../components/Navigation/Navigation.astro";
 import Umbrella from "../components/Umbrella.astro";
-// import MobileMegaMenu from "../components/Navigation/MobileMegaMenu2";
-import MobileMegaMenu from "../components/Navigation/MobileMegaMenu.astro";
 
 const { title = "page title" } = Astro.props;
 
@@ -12,17 +10,6 @@ interface Props {
   title?: string;
 }
 
-const categoryResponse = await fetch(
-  "https://dummyjson.com/products/categories"
-);
-const rawCategories = await categoryResponse.json();
-console.log("raw", rawCategories);
-const categories = rawCategories.slice(0, 4);
-
-const subcategoryResponse = await fetch(
-  "https://dummyjson.com/products/categories"
-);
-const subcategories = await subcategoryResponse.json();
 ---
 
 <!doctype html>
@@ -51,7 +38,7 @@ const subcategories = await subcategoryResponse.json();
   <body>
     <Umbrella />
     <nav class="z-30">
-      <Navigation categories={categories} subcategories={subcategories} />
+      <Navigation server:defer/>
     </nav>
     <slot />
     <script>

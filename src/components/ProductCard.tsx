@@ -1,7 +1,7 @@
 import { FaCartShopping } from "react-icons/fa6";
 
 const ProductCard = ({ product }: any) => {
-  console.log("product", product);
+  // console.log("product", product);
   return (
     <div className="relative flex w-full justify-self-center max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
       <a

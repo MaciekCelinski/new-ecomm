@@ -1,8 +1,7 @@
 ---
 import { FaAngleDown } from "react-icons/fa6";
-import DesktopMegaMenu from "./DesktopMegaMenu.astro";
 
-const { categories, subcategories } = Astro.props;
+const { categories } = Astro.props;
 ---
 
 <div class="h-12 pl-[15%] -mt-1 bg-white">
@@ -24,21 +23,3 @@ const { categories, subcategories } = Astro.props;
     }
   </div>
 </div>
-<DesktopMegaMenu subcategories={subcategories} />
-
-<script>
-  const subcategoriesEl = document.querySelector("#subcategories");
-  const megamenuEl = document.querySelector("#desktop-megamenu");
-
-  const toggleMegaMenu = (show = false) => {
-    show
-      ? megamenuEl?.classList.replace("hidden", "grid")
-      : megamenuEl?.classList.replace("grid", "hidden");
-  };
-
-  subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
-  subcategoriesEl?.addEventListener("mouseleave", () => toggleMegaMenu());
-
-  megamenuEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
-  megamenuEl?.addEventListener("mouseleave", () => toggleMegaMenu());
-</script>

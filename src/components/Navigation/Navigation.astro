@@ -1,15 +1,24 @@
 ---
 import SearchInput from "../SearchInput.astro";
-import DesktopCategories2 from "./DesktopCategories2";
 import DesktopCategories from "./DesktopCategories.astro";
-import NavigationIcons from "./NavigationIcons";
-import MobileMegaMenu from "./MobileMegaMenu.astro";
+import MegaMenu from "./MegaMenu.astro";
+import NavigationIcons from "./NavigationIcons.astro";
 
-const { categories, subcategories } = Astro.props;
+
+const categoryResponse = await fetch(
+  "https://dummyjson.com/products/categories"
+);
+
+const rawCategories = await categoryResponse.json();
+const categories = rawCategories.slice(0, 4);
+
+const subcategoryResponse = await fetch(
+  "https://dummyjson.com/products/categories"
+);
+const subcategories = await subcategoryResponse.json();
 ---
 <!-- MOBILE NAVIGATION -->
 <div id="mobile-navigation" class="block md:hidden">
-  <MobileMegaMenu subcategories={subcategories} />
   <div
     class="w-full flex flex-col justify-center items-center pt-3 bg-white border-b-1"
   >
@@ -23,7 +32,7 @@ const { categories, subcategories } = Astro.props;
           />
         </a>
       </div>
-      <NavigationIcons client:load />
+      <NavigationIcons />
     </div>
     <div class="flex justify-center py-3 w-3/4">
       <SearchInput />
@@ -49,28 +58,33 @@ const { categories, subcategories } = Astro.props;
       <div class="w-full flex justify-center">
         <SearchInput />
       </div>
-      <NavigationIcons client:load />
+      <NavigationIcons />
     </div>
   </div>
   <div>
-    <!-- <DesktopCategories
-      categories={categories}
-      subcategories={subcategories}
-    >
-      <div slot="fallback">
-        <div class="w-full h-12 px-[15%] -mt-1 bg-white">
-          <div class="w-full h-full flex">
-            <div
-              role="status"
-              class="w-full flex justify-center items-center animate-pulse"
-            >
-              <div class="w-full h-5 bg-gray-100 rounded-sm dark:bg-gray-200">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </DesktopCategories> -->
     <DesktopCategories categories={categories} subcategories={subcategories} />
   </div>
 </div>
+
+<!-- MEGAMENU -->
+<MegaMenu subcategories={subcategories} />
+
+<script>
+  const subcategoriesEl = document.querySelector("#subcategories");
+  const megamenuEl = document.querySelector("#desktop-megamenu");
+  console.log(megamenuEl)
+
+  const toggleMegaMenu = (show = false) => {
+    console.log('toggle')
+    show
+      ? megamenuEl?.classList.replace("hidden", "grid")
+      : megamenuEl?.classList.replace("grid", "hidden");
+      console.log('classes', megamenuEl?.classList)
+  };
+
+  subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
+  subcategoriesEl?.addEventListener("mouseleave", () => toggleMegaMenu());
+
+  megamenuEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
+  megamenuEl?.addEventListener("mouseleave", () => toggleMegaMenu());
+</script>

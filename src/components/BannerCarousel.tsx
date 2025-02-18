@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 const ImageCarousel = () => {
@@ -36,90 +35,9 @@ const ImageCarousel = () => {
     else setCurrent(current + 1);
   };
 
-  // useEffect(() => {
-  //   const slider: HTMLElement | null = document.querySelector(".items");
-  //   let isDown = false;
-  //   let startX = 0;
-  //   let scrollLeft = 0;
-
-  //   if (slider) {
-  //     console.log("slider", slider);
-  //     slider.addEventListener("mousedown", (e) => {
-  //       console.log('down')
-  //       isDown = true;
-  //       startX = e.pageX - slider.offsetLeft;
-  //       scrollLeft = slider.scrollLeft;
-  //     });
-
-  //     slider.addEventListener("mouseleave", () => {
-  //       isDown = false;
-  //     });
-
-  //     slider.addEventListener("mouseup", () => {
-  //       isDown = false;
-  //     });
-
-  //     slider.addEventListener("mousemove", (e) => {
-  //       if (!isDown) return;
-  //       e.preventDefault();
-  //       const x = e.pageX - slider.offsetLeft;
-  //       const walk = (x - startX); //scroll-fast
-  //       slider.scrollLeft = scrollLeft - walk;
-  //     });
-  //   }
-  // },[]);
-
-  // return (
-  // <div
-  //   id="default-carousel"
-  //   className="relative w-full"
-  //   data-carousel="slide"
-  // >
-  //   <div className="h-48 md:max-h-full overflow-hidden rounded-lg">
-  //     {banners.map((banner, index) => (
-  //       <a href={banner.pageUrl} key={index}>
-  //         <img
-  //           src={banner.imageUrl}
-  //           alt={banner.message}
-  //           className={`${
-  //             activeImage !== (index)
-  //               ? "invisible opacity-0"
-  //               : "visible opacity-100"
-  //           } transition-all duration-700 absolute block h-48 md:h-full`}
-  //         />
-  //       </a>
-  //     ))}
-  //   </div>
-  //   <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-  //     {banners.map((_, index) => (
-  //       <button
-  //         key={index}
-  //         type="button"
-  //         className={`${
-  //           activeImage === index
-  //             ? "w-12 h-2 bg-slate-100"
-  //             : "w-8 h-2 bg-slate-300"
-  //         }`}
-  //         aria-current="true"
-  //         aria-label={"slide_" + index}
-  //         onClick={() => setImage(index)}
-  //       ></button>
-  //     ))}
-  //   </div>
-  // </div>
-
-  // );
   return (
     <div className="overflow-hidden relative items">
-      <div
-        className="flex transition ease-out duration-400 "
-        // style={{
-        //   transform: `translateX(-${current * 100}%)`,
-        // }}
-      >
-        {/* {slides.map((slide, index) => {
-          return <img src={slide.imageUrl} key={index} />;
-        })} */}
+      <div className="flex transition ease-out duration-400 ">
         <img className="flex w-full" src={slides[current].imageUrl} />
       </div>
 
