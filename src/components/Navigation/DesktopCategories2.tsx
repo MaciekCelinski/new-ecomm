@@ -3,7 +3,7 @@ import { useStore } from "@nanostores/react";
 import { isMobile } from "../../stores/NavigationStore";
 import { FaAngleDown } from "react-icons/fa6";
 
-import DesktopMegaMenu from "./DesktopMegaMenu";
+import DesktopMegaMenu2 from "./DesktopMegaMenu2";
 
 interface category {
   slug: string;
@@ -80,7 +80,7 @@ const DesktopCategories = ({
           </div>
         </div>
         {menuVisible ? (
-          <DesktopMegaMenu
+          <DesktopMegaMenu2
             toggleMenu={toggleDesktopMenu}
             subcategories={subcategories}
           />

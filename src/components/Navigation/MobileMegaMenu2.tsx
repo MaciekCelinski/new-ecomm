@@ -12,7 +12,7 @@ interface MenuProps {
   subcategories: Subcategory[];
 }
 
-const MobileMegaMenu = ({ subcategories }: MenuProps) => {
+const MobileMegaMenu2 = ({ subcategories }: MenuProps) => {
   const $isMobileMenuOpen = useStore(isMobileMenuOpen);
   const $isMobile = useStore(isMobile);
   if (!$isMobile) return null;
@@ -39,4 +39,4 @@ const MobileMegaMenu = ({ subcategories }: MenuProps) => {
     );
 };
 
-export default MobileMegaMenu;
+export default MobileMegaMenu2;

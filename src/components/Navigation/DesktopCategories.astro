@@ -1,0 +1,44 @@
+---
+import { FaAngleDown } from "react-icons/fa6";
+import DesktopMegaMenu from "./DesktopMegaMenu.astro";
+
+const { categories, subcategories } = Astro.props;
+---
+
+<div class="h-12 pl-[15%] -mt-1 bg-white">
+  <div class="h-full flex max-w-fit gap-4">
+    <p
+      id="subcategories"
+      class="h-full flex justify-center items-center text-xs text-velo-green font-semibold cursor-pointer"
+    >
+      Wszystkie kategorie <FaAngleDown />
+    </p>
+    {
+      categories.map((category: any) => (
+        <a href={`/listing/${category.slug}`}>
+          <p class="h-full flex justify-center items-center text-xs text-gray-400 font-semibold cursor-pointer">
+            {category.name}
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</div>
+<DesktopMegaMenu subcategories={subcategories} />
+
+<script>
+  const subcategoriesEl = document.querySelector("#subcategories");
+  const megamenuEl = document.querySelector("#desktop-megamenu");
+
+  const toggleMegaMenu = (show = false) => {
+    show
+      ? megamenuEl?.classList.replace("hidden", "grid")
+      : megamenuEl?.classList.replace("grid", "hidden");
+  };
+
+  subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
+  subcategoriesEl?.addEventListener("mouseleave", () => toggleMegaMenu());
+
+  megamenuEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
+  megamenuEl?.addEventListener("mouseleave", () => toggleMegaMenu());
+</script>

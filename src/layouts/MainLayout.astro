@@ -1,9 +1,10 @@
 ---
 import Navigation from "../components/Navigation/Navigation.astro";
-import NavigationCategories from "../components/Navigation/DesktopCategories";
+import NavigationCategories from "../components/Navigation/DesktopCategories2";
 import "../styles/global.css";
 import Umbrella from "../components/Umbrella.astro";
-import MobileMegaMenu from "../components/Navigation/MobileMegaMenu";
+// import MobileMegaMenu from "../components/Navigation/MobileMegaMenu2";
+import MobileMegaMenu from "../components/Navigation/MobileMegaMenu.astro";
 
 const { title = "page title" } = Astro.props;
 
@@ -48,7 +49,6 @@ const subcategories = await subcategoryResponse.json();
     </style>
   </head>
   <body>
-    <MobileMegaMenu subcategories={subcategories} client:only />
     <Umbrella />
     <nav class="z-30">
       <Navigation categories={categories} subcategories={subcategories} />
@@ -56,7 +56,6 @@ const subcategories = await subcategoryResponse.json();
     <slot />
     <script>
       import { setIsMobile } from "../utils/ClientUtils";
-
       setIsMobile();
     </script>
   </body>

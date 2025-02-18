@@ -1,0 +1,51 @@
+---
+import { IoCloseSharp } from "react-icons/io5";
+
+const { subcategories } = Astro.props;
+---
+
+<div
+  id="mobile-megamenu"
+  class="hidden sticky h-screen top-0 bottom-0 left-0 right-0 -mt-6 border-y-1 border-gray-300 bg-white z-40 p-6"
+>
+  <IoCloseSharp
+    id="mobile-megamenu-close-btn"
+    className="absolute top-5 right-5 text-2xl cursor-pointer"
+  />
+  <div class="mt-12 grid">
+    <h1 class="mb-3 text-xl">Kategorie produktowe</h1>
+    {
+      subcategories.map((cat: any) => (
+        <a class="mobile-menu-category" href={"/listing/" + cat.slug}>
+          <span>{cat.name}</span>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import { isMobileMenuOpen } from "../../stores/NavigationStore";
+
+  const mobileMenuEl = document.querySelector("#mobile-megamenu");
+  const mobileMenuCloseBtn = document.querySelector(
+    "#mobile-megamenu-close-btn"
+  );
+  const mobileMenuCategory = document.querySelectorAll(".mobile-menu-category");
+
+  isMobileMenuOpen.subscribe((open) => {
+    if (open) {
+      mobileMenuEl?.classList.remove("hidden");
+    } else {
+      mobileMenuEl?.classList.add("hidden");
+    }
+  });
+
+  mobileMenuCloseBtn?.addEventListener("click", () =>
+    isMobileMenuOpen.set(false)
+  );
+
+  mobileMenuCategory.forEach((category) =>
+    category.addEventListener("click", () => isMobileMenuOpen.set(false))
+  );
+</script>

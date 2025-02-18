@@ -1,0 +1,15 @@
+---
+const { subcategories } = Astro.props;
+---
+
+<div id="desktop-megamenu"
+  class="hidden absolute h-80 w-full border-y-1 border-gray-300 bg-white z-40 p-6 grid-cols-5"
+>
+  {
+    subcategories.map((cat: any) => (
+      <a href={"/listing/" + cat.slug}>
+        <span>{cat.name}</span>
+      </a>
+    ))
+  }
+</div>
