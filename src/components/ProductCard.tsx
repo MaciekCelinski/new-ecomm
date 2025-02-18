@@ -6,7 +6,7 @@ const ProductCard = ({ product }: any) => {
     <div className="relative flex w-full justify-self-center max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
       <a
         className="relative mx-3 mt-3 flex justify-center h-60 overflow-hidden rounded-xl"
-        href="#"
+        href={`/product/${product.id}`}
       >
         <img
           className="object-cover"
@@ -18,7 +18,7 @@ const ProductCard = ({ product }: any) => {
         </span>
       </a>
       <div className="mt-4 px-5 pb-5">
-        <a href="#">
+        <a href={`/product/${product.id}`}>
           <h5 className="text-lg tracking-tight truncate text-slate-900">
             {product.title}
           </h5>
@@ -83,12 +83,12 @@ const ProductCard = ({ product }: any) => {
             </span>
           </div> */}
         </div>
-        <a
-          href="#"
+        <div
+          
           className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700"
         >
           <FaCartShopping className="text-xl mr-4"/> Dodaj do koszyka
-        </a>
+        </div>
       </div>
     </div>
   );

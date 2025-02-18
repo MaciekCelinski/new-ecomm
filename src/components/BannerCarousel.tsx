@@ -120,7 +120,7 @@ const ImageCarousel = () => {
         {/* {slides.map((slide, index) => {
           return <img src={slide.imageUrl} key={index} />;
         })} */}
-        <img src={slides[current].imageUrl} />;
+        <img className="flex w-full" src={slides[current].imageUrl} />
       </div>
 
       <div className="hidden md:flex absolute top-0 h-full w-full justify-between items-center text-white px-5 text-3xl">

@@ -16,7 +16,7 @@ const NavigationIcons = () => {
   };
 
   return (
-    <div className="w-full flex justify-end md:pt-4 pr-5 md:pr-20 text-lg gap-4 md:gap-8 text-gray-600">
+    <div className="w-full flex justify-end md:pt-2 pr-5 md:pr-20 text-lg gap-4 md:gap-8 text-gray-600">
       <a href="/favorites">
         <FaRegHeart className="cursor-pointer" />
       </a>

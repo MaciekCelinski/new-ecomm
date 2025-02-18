@@ -12,9 +12,11 @@ interface Props {
 }
 
 const categoryResponse = await fetch(
-  "https://fakestoreapi.com/products/categories"
+  "https://dummyjson.com/products/categories"
 );
-const categories: string[] = await categoryResponse.json();
+const rawCategories = await categoryResponse.json();
+console.log("raw", rawCategories);
+const categories = rawCategories.slice(0, 4);
 
 const subcategoryResponse = await fetch(
   "https://dummyjson.com/products/categories"
