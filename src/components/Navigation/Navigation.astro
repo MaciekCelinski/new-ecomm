@@ -1,22 +1,11 @@
 ---
 import SearchInput from "../SearchInput.astro";
+// import DesktopCategories from "./DesktopCategories";
 import DesktopCategories from "./DesktopCategories.astro";
 import MegaMenu from "./MegaMenu.astro";
 import NavigationIcons from "./NavigationIcons.astro";
-
-
-const categoryResponse = await fetch(
-  "https://dummyjson.com/products/categories"
-);
-
-const rawCategories = await categoryResponse.json();
-const categories = rawCategories.slice(0, 4);
-
-const subcategoryResponse = await fetch(
-  "https://dummyjson.com/products/categories"
-);
-const subcategories = await subcategoryResponse.json();
 ---
+
 <!-- MOBILE NAVIGATION -->
 <div id="mobile-navigation" class="block md:hidden">
   <div
@@ -62,29 +51,22 @@ const subcategories = await subcategoryResponse.json();
     </div>
   </div>
   <div>
-    <DesktopCategories categories={categories} subcategories={subcategories} />
+    <div class="h-12 pl-[15%] -mt-1 bg-white">
+      
+        <DesktopCategories server:defer>
+        <!-- <DesktopCategories client:only> -->
+          <div
+            role="status"
+            class="flex justify-center items-center animate-pulse"
+            slot="fallback"
+          >
+            <div class="h-3 bg-gray-200 rounded-full w-96"></div>
+          </div>
+        </DesktopCategories>
+      
+    </div>
   </div>
 </div>
 
 <!-- MEGAMENU -->
-<MegaMenu subcategories={subcategories} />
-
-<script>
-  const subcategoriesEl = document.querySelector("#subcategories");
-  const megamenuEl = document.querySelector("#desktop-megamenu");
-  console.log(megamenuEl)
-
-  const toggleMegaMenu = (show = false) => {
-    console.log('toggle')
-    show
-      ? megamenuEl?.classList.replace("hidden", "grid")
-      : megamenuEl?.classList.replace("grid", "hidden");
-      console.log('classes', megamenuEl?.classList)
-  };
-
-  subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
-  subcategoriesEl?.addEventListener("mouseleave", () => toggleMegaMenu());
-
-  megamenuEl?.addEventListener("mouseenter", () => toggleMegaMenu(true));
-  megamenuEl?.addEventListener("mouseleave", () => toggleMegaMenu());
-</script>
+<MegaMenu server:defer />

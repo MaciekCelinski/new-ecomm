@@ -9,7 +9,6 @@ const { title = "page title" } = Astro.props;
 interface Props {
   title?: string;
 }
-
 ---
 
 <!doctype html>
@@ -38,7 +37,7 @@ interface Props {
   <body>
     <Umbrella />
     <nav class="z-30">
-      <Navigation server:defer/>
+      <Navigation />
     </nav>
     <slot />
     <script>

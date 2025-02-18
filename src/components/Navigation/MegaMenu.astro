@@ -1,10 +1,15 @@
 ---
 import { IoCloseSharp } from "react-icons/io5";
 
-const { subcategories } = Astro.props;
+const subcategoryResponse = await fetch(
+  "https://dummyjson.com/products/categories"
+);
+const subcategories = await subcategoryResponse.json();
 ---
 
-<div id="desktop-megamenu"
+<!-- DESKTOP MEGA MENU -->
+<div
+  id="desktop-megamenu"
   class="hidden absolute h-80 w-full border-y-1 border-gray-300 bg-white z-40 p-6 grid-cols-5"
 >
   {
@@ -16,6 +21,40 @@ const { subcategories } = Astro.props;
   }
 </div>
 
+<script>
+  // const subcategoriesEl = document.querySelector("#subcategories");
+  
+
+  const toggleMegaMenu = (megamenuEl:any, show = false) => {
+    show
+      ? megamenuEl?.classList.replace("hidden", "grid")
+      : megamenuEl?.classList.replace("grid", "hidden");
+  };
+
+  const waitForElement = (elementId: string, callback: Function) => {
+    window.setTimeout(function () {
+      var element = document.querySelector(elementId);
+      if (element) {
+        callback(element);
+      } else {
+        waitForElement(elementId, callback);
+      }
+    }, 100);
+  };
+
+  waitForElement("#subcategories", (subcategoriesEl:any) => {
+    const megamenuEl = document.querySelector("#desktop-megamenu");
+
+    subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(megamenuEl, true));
+    subcategoriesEl?.addEventListener("mouseleave", () => toggleMegaMenu(megamenuEl));
+
+    megamenuEl?.addEventListener("mouseenter", () => toggleMegaMenu(megamenuEl, true));
+    megamenuEl?.addEventListener("mouseleave", () => toggleMegaMenu(megamenuEl));
+  });
+  
+</script>
+
+<!-- MOBILE MEGA MENU -->
 <div
   id="mobile-megamenu"
   class="hidden sticky h-screen top-0 bottom-0 left-0 right-0 -mt-6 border-y-1 border-gray-300 bg-white z-40 p-6"

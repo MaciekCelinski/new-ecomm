@@ -1,7 +1,6 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 
-console.log("astro params", Astro.params);
 const { id } = Astro.params;
 
 const productData = await fetch(`https://dummyjson.com/products/${id}`);
