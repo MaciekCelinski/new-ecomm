@@ -1,4 +1,4 @@
-import { atom, deepMap, map } from "nanostores";
+import { atom, map } from "nanostores";
 // import type { PreinitializedWritableAtom } from "nanostores";
 
 // export const isMobile: PreinitializedWritableAtom<boolean | null> = atom(null);
