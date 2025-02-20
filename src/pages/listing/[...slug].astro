@@ -14,7 +14,7 @@ const results = await response.json();
     <div class="max-w-[1440px] p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {
         results.products.map((result: any) => (
-          <ProductCard product={result} key={result.id}/>
+          <ProductCard product={result} key={result.id} server:defer/>
         ))
       }
     </div>

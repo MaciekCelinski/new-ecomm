@@ -1,13 +1,14 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import BannerCarousel from "../components/BannerCarousel";
-import CategoryButtons from "../components/CategoryButtons";
+import CategoryButtons from "../components/CategoryButtons.astro";
 ---
 
 <MainLayout title="Strona główna">
   <BannerCarousel client:only />
   <div class="w-full m-auto max-w-[1440px]">
-    <CategoryButtons client:only>
+    <!-- <CategoryButtons client:only> -->
+    <CategoryButtons server:defer>
       <div
         role="status"
         class="flex justify-center items-center animate-pulse"

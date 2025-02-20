@@ -4,6 +4,7 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
 ---
 
 <div
+  id="seller"
   class="w-full flex justify-end md:pt-2 pr-5 md:pr-20 text-lg gap-4 md:gap-8 text-gray-600"
 >
   <a href="/favorites">
@@ -12,7 +13,13 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
   <a href="/profile">
     <FaRegUser className="cursor-pointer" />
   </a>
-  <a href="/cart">
+  <a class="relative" href="/cart/2">
+    <p
+      id="cart-count"
+      class="absolute hidden -top-3 -left-3 px-1.5 pb-0.5 text-xs bg-gray-600 text-white rounded-2xl font-bold"
+    >
+      0
+    </p>
     <FaCartShopping className="cursor-pointer" />
   </a>
   <AiOutlineMenu
@@ -22,7 +29,24 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
 </div>
 
 <script>
-  import { isMobileMenuOpen } from "../../stores/NavigationStore";
+  import {
+    isMobileMenuOpen,
+    cartProductsCount,
+    isMobile,
+  } from "../../stores/NavigationStore";
+
+  let isViewMobile = isMobile.get();
+  let navElement
+
+  if(isViewMobile) navElement = document.querySelector("#mobile-navigation");
+  if(!isViewMobile) navElement = document.querySelector("#desktop-navigation");
+
+  const cartCount = navElement?.querySelector("#cart-count");
+
+  cartProductsCount.subscribe((value) => {
+    if(value === 1) cartCount?.classList.remove('hidden')
+    if (cartCount) cartCount.textContent = value.toString();
+  });
 
   const mobileMenuHamburger = document.querySelector("#mobile-menu-hamburger");
 
