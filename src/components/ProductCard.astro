@@ -90,7 +90,8 @@ const { product } = Astro.props;
         </span>
       </p>
     </div>
-    <AddToCartBtn client:only product={product}>
+    <!-- <AddToCartBtn product={product} server:defer> -->
+    <AddToCartBtn product={product} client:only >
       <div
         role="status"
         class="flex justify-center items-center animate-pulse"

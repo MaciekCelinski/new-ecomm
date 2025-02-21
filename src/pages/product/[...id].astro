@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import MainLayout from "../../layouts/MainLayout.astro";
+import PageLoader from "../../components/PageLoader.astro";
 
 const { id } = Astro.params;
 
@@ -13,8 +14,21 @@ const product = await productData.json();
   <section class="py-8 bg-white md:py-16 antialiased">
     <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
       <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-        <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
-          <Image class="bg-gray-50" src={product.images[0]} alt="product image" width={360} height={360} format="avif" quality={'mid'} densities={[1.5, 2]} loading={"lazy"}/>
+        <div class="relative shrink-0 max-w-md lg:max-w-lg mx-auto">
+          <div class="absolute top-[40%] left-[45%] z-0">
+            <PageLoader />
+          </div>
+          <Image
+            class="relative z-10 text-white"
+            src={product.images[0]}
+            alt="product image"
+            width={360}
+            height={360}
+            format="avif"
+            quality={"mid"}
+            densities={[1.5, 2]}
+            loading={"lazy"}
+          />
         </div>
 
         <div class="mt-6 sm:mt-8 lg:mt-0">

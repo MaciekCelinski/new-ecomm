@@ -1,14 +1,9 @@
 ---
 import { FaAngleDown } from "react-icons/fa6";
-import { navCategories } from "../../stores/NavigationStore";
+import { categoryStore } from "../../stores/NavigationStore";
 
-const categoryResponse = await fetch(
-  "https://dummyjson.com/products/categories"
-);
-
-const rawCategories = await categoryResponse.json();
+const rawCategories = await categoryStore.then();
 const categories = rawCategories.slice(0, 4);
-navCategories.set(rawCategories.slice(0, 7))
 ---
 
 <div class="h-full flex max-w-fit gap-4">
