@@ -2,11 +2,14 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import BannerCarousel from "../components/BannerCarousel";
 import CategoryButtons from "../components/CategoryButtons.astro";
+import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
+import ProductCarouselReact from "../components/Product/ProductsCarousel";
+import Footer from "../components/Footer.astro";
 ---
 
 <MainLayout title="Strona główna">
   <BannerCarousel client:only />
-  <div class="w-full m-auto max-w-[1440px]">
+  <div class="w-full m-auto max-w-[1440px] flex flex-col mt-24 gap-12">
     <!-- <CategoryButtons client:only> -->
     <CategoryButtons server:defer>
       <div
@@ -17,5 +20,17 @@ import CategoryButtons from "../components/CategoryButtons.astro";
         <div class="h-3 bg-gray-200 rounded-full w-96"></div>
       </div>
     </CategoryButtons>
+    <ProductCarouselReact category="furniture" client:only />
+    <ProductCarouselReact category="groceries" client:only />
+    <ProductCarouselReact
+      category="beauty"
+      color="velo-green"
+      sideText={true}
+      client:only
+    />
+    <!-- <ProductsCarousel category="furniture" />
+    <ProductsCarousel category="fragrances" />
+    <ProductsCarousel category="beauty" color="velo-green" sideText={true} /> -->
   </div>
+  <Footer />
 </MainLayout>

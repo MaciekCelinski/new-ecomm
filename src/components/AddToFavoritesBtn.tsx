@@ -4,8 +4,6 @@ import { FaRegHeart, FaHeart } from "react-icons/fa6";
 const AddToFavoritesBtn = (product:any) => {
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
-  console.log('favorites product', product)
-
   const toggleAddToFavorites = () => {
     setAddedToFavorites((prev) => !prev);
   };

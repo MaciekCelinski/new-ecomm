@@ -1,0 +1,157 @@
+---
+import ProductCard from "./ProductCard.astro";
+
+const { color = "", sideText = false, category, index } = Astro.props;
+
+const SPV = sideText ? 3 : 5;
+
+const response = await fetch(
+  `https://dummyjson.com/products/category/${category}`
+);
+const results = await response.json();
+---
+
+<astro-greet data-category={category} data-spv={SPV} data-index={index}>
+  <div class="mx-auto mt-6 max-w-full flex-1 space-y-6 lg:mt-0 lg:w-full">
+    <div
+      class:list={[
+        "space-y-4 rounded-lg border border-gray-200 p-4 shadow-sm sm:px-6 sm:pb-2 ms:pt-4",
+        `${color ? 'bg-'+color : 'bg-white'}`,
+      ]}
+    >
+      <div class="flex justify-between my-8">
+        <p class="text-3xl">{category}</p>
+        <a href=`/listing/${category}` class="underline"> Zobacz więcej --> </a>
+      </div>
+      <div class:list={["grid", `${sideText ? "grid-cols-[35%_65%]" : ""}`]}>
+        {sideText && (
+          <div class="p-4">
+            <h4 class="text-2xl">Lorem Ipsum</h4>
+            <p class="pt-4">
+              Contrary to popular belief, Lorem Ipsum is not simply random
+              text. It has roots in a piece of classical Latin literature
+              from 45 BC, making it over 2000 years old. Richard McClintock,
+              a Latin professor at Hampden-Sydney College in Virginia,
+              looked up one of the more obscure Latin words, consectetur,
+              from a Lorem Ipsum passage, and going through the cites of the
+              word in classical literature, discovered the undoubtable
+              source.
+            </p>
+          </div>
+        )}
+
+        <!-- Slider main container -->
+        <div class=`swiper swiper-${category} w-full`>
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            {
+              results.products.map((result: any) => (
+                <div class="swiper-slide mb-6">
+                  <ProductCard product={result} key={result.id} server:defer />
+                </div>
+              ))
+            }
+          </div>
+          <!-- If we need pagination -->
+          <div class="swiper-pagination !-bottom-1"></div>
+
+          <!-- If we need navigation buttons -->
+          <div
+            class="swiper-button swiper-button-prev rounded-full !text-black border border-gray-200 bg-white p-6 shadow-sm"
+          >
+          </div>
+          <div
+            class="swiper-button swiper-button-next rounded-full !text-black border border-gray-200 bg-white p-6 shadow-sm"
+          >
+          </div>
+          <!-- If we need scrollbar
+    <div class="swiper-scrollbar"></div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</astro-greet>
+
+<style>
+  /* .swiper-wrapper {
+max-width: 800px;
+} */
+
+  /* .swiper-slide img {
+height: auto;
+max-width: 100%;
+object-fit: cover;
+} */
+
+  /* .swiper-pagination {
+bottom: -4px !important;
+} */
+
+  .swiper-button::after {
+    font-size: 24px;
+    /* color: black;
+background-color: white;
+padding: 8px; */
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation, Pagination } from "swiper/modules";
+  import "swiper/css/bundle";
+  let spv: number = 4;
+  let index = 0;
+  let category = "";
+
+  class AstroGreet extends HTMLElement {
+    connectedCallback() {
+      category = this.dataset.category!;
+      spv = Number(this.dataset.spv);
+    }
+  }
+
+  customElements.define("astro-greet", AstroGreet);
+
+  const swiperConfig = {
+    modules: [Navigation, Pagination],
+    // Optional parameters
+    loop: true,
+    // slidesPerView: spv,
+    slidesPerView: spv,
+    spaceBetween: 10,
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    // breakpoints
+    // breakpoints: {
+    //   640: {
+    //     slidesPerView: 2,
+    //     spaceBetween: 20,
+    //   },
+    //   768: {
+    //     slidesPerView: 4,
+    //     spaceBetween: 40,
+    //   },
+    //   1024: {
+    //     slidesPerView: 5,
+    //     spaceBetween: 50,
+    //   },
+    // },
+
+    // And if we need scrollbar
+    // scrollbar: {
+    //   el: '.swiper-scrollbar',
+    // },
+  };
+
+  const swiper = new Swiper(`.swiper`, swiperConfig);
+</script>
