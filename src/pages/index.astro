@@ -2,9 +2,8 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import BannerCarousel from "../components/BannerCarousel";
 import CategoryButtons from "../components/CategoryButtons.astro";
-// import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
+import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
 import ProductCarouselReact from "../components/Product/ProductsCarousel";
-
 ---
 
 <MainLayout title="Strona główna">
@@ -22,7 +21,7 @@ import ProductCarouselReact from "../components/Product/ProductsCarousel";
         </div>
       </CategoryButtons>
     </section>
-    <section id="carousels" class="flex flex-col gap-4 md:gap-12">
+    <!-- <section id="carousels" class="flex flex-col gap-4 md:gap-12">
       <ProductCarouselReact category="furniture" client:only />
       <ProductCarouselReact category="groceries" client:only />
       <ProductCarouselReact
@@ -31,9 +30,11 @@ import ProductCarouselReact from "../components/Product/ProductsCarousel";
         sideText={true}
         client:only
       />
+    </section> -->
+    <section id="carousels" class="flex flex-col gap-4 md:gap-12">
+      <ProductsCarousel category="furniture" />
+      <ProductsCarousel category="mens-watches" />
+      <ProductsCarousel category="beauty" color="velo-green" sideText={true} />
     </section>
-    <!-- <ProductsCarousel category="furniture" />
-    <ProductsCarousel category="fragrances" />
-    <ProductsCarousel category="beauty" color="velo-green" sideText={true} /> -->
   </main>
 </MainLayout>

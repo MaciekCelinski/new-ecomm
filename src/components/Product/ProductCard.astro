@@ -77,7 +77,7 @@ const { product } = Astro.props;
     </a>
     <div class="mt-2 mb-5 flex items-center justify-between">
       <p>
-        <span class="text-3xl font-bold text-slate-900 mr-1">
+        <span class="text-2xl font-bold text-slate-900 mr-1">
           ${
             Math.floor(
               (product.price -
@@ -92,14 +92,5 @@ const { product } = Astro.props;
       </p>
     </div>
     <AddToCartBtn product={product} server:defer>
-    <!-- <AddToCartBtn product={product} client:only >
-      <div
-        role="status"
-        class="flex justify-center items-center animate-pulse"
-        slot="fallback"
-      >
-        <div class="mt-2 mb-5 w-full h-10 bg-gray-200 rounded-md"></div>
-      </div>
-    </AddToCartBtn> -->
   </div>
 </div>

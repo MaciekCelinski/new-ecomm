@@ -1,7 +1,7 @@
 ---
 import ProductCard from "./ProductCard.astro";
 
-const { color = "", sideText = false, category, index } = Astro.props;
+const { color = "", sideText = false, category } = Astro.props;
 
 const SPV = sideText ? 3 : 5;
 
@@ -11,34 +11,40 @@ const response = await fetch(
 const results = await response.json();
 ---
 
-<astro-element data-category={category} data-spv={SPV} data-index={index}>
+<astro-carousel data-category={category} data-spv={SPV}>
   <div class="mx-auto mt-6 max-w-full flex-1 space-y-6 lg:mt-0 lg:w-full">
     <div
       class:list={[
         "space-y-4 rounded-lg border border-gray-200 p-4 shadow-sm sm:px-6 sm:pb-2 ms:pt-4",
-        `${color ? 'bg-'+color : 'bg-white'}`,
+        `${color ? "bg-" + color : "bg-white"}`,
       ]}
     >
       <div class="flex justify-between my-8">
         <p class="text-3xl">{category}</p>
         <a href=`/listing/${category}` class="underline"> Zobacz więcej --> </a>
       </div>
-      <div class:list={["grid", `${sideText ? "grid-cols-[35%_65%]" : ""}`]}>
-        {sideText && (
-          <div class="p-4">
-            <h4 class="text-2xl">Lorem Ipsum</h4>
-            <p class="pt-4">
-              Contrary to popular belief, Lorem Ipsum is not simply random
-              text. It has roots in a piece of classical Latin literature
-              from 45 BC, making it over 2000 years old. Richard McClintock,
-              a Latin professor at Hampden-Sydney College in Virginia,
-              looked up one of the more obscure Latin words, consectetur,
-              from a Lorem Ipsum passage, and going through the cites of the
-              word in classical literature, discovered the undoubtable
-              source.
-            </p>
-          </div>
-        )}
+      <div
+        class:list={[
+          "flex flex-col",
+          `${sideText ? " md:grid md:grid-cols-[35%_65%]" : "md:grid"}`,
+        ]}
+      >
+        {
+          sideText && (
+            <div class="hidden md:block md:p-4">
+              <h4 class="text-2xl">Lorem Ipsum</h4>
+              <p class="pt-4">
+                Contrary to popular belief, Lorem Ipsum is not simply random
+                text. It has roots in a piece of classical Latin literature from
+                45 BC, making it over 2000 years old. Richard McClintock, a
+                Latin professor at Hampden-Sydney College in Virginia, looked up
+                one of the more obscure Latin words, consectetur, from a Lorem
+                Ipsum passage, and going through the cites of the word in
+                classical literature, discovered the undoubtable source.
+              </p>
+            </div>
+          )
+        }
 
         <!-- Slider main container -->
         <div class=`swiper swiper-${category} w-full`>
@@ -71,7 +77,7 @@ const results = await response.json();
       </div>
     </div>
   </div>
-</astro-element>
+</astro-carousel>
 
 <style>
   /* .swiper-wrapper {
@@ -100,58 +106,64 @@ padding: 8px; */
   import Swiper from "swiper";
   import { Navigation, Pagination } from "swiper/modules";
   import "swiper/css/bundle";
-  let spv: number = 4;
-  let index = 0;
+
   let category = "";
 
-  class AstroElement extends HTMLElement {
+  class AstroCarousel extends HTMLElement {
     connectedCallback() {
       category = this.dataset.category!;
-      spv = Number(this.dataset.spv);
+
+      const swiperConfig = {
+        modules: [Navigation, Pagination],
+        // Optional parameters
+        loop: true,
+        // slidesPerView: spv,
+        // slidesPerView: this.dataset.spv ? Number(this.dataset.spv) : 0,
+        spaceBetween: 10,
+        // If we need pagination
+        // pagination: {
+        //   el: ".swiper-pagination",
+        //   clickable: true,
+        // },
+
+        // Navigation arrows
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        // breakpoints
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: this.dataset.spv === '3' ? 1 : 3,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: this.dataset.spv ? Number(this.dataset.spv) : 5,
+            spaceBetween: 50,
+          },
+        },
+        // And if we need scrollbar
+        // scrollbar: {
+        //   el: '.swiper-scrollbar',
+        // },
+      };
+
+      const swiper = new Swiper(`.swiper-${category}`, swiperConfig);
     }
   }
 
-  customElements.define("astro-element", AstroElement);
-
-  const swiperConfig = {
-    modules: [Navigation, Pagination],
-    // Optional parameters
-    loop: true,
-    // slidesPerView: spv,
-    slidesPerView: spv,
-    spaceBetween: 10,
-    // If we need pagination
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    // breakpoints
-    // breakpoints: {
-    //   640: {
-    //     slidesPerView: 2,
-    //     spaceBetween: 20,
-    //   },
-    //   768: {
-    //     slidesPerView: 4,
-    //     spaceBetween: 40,
-    //   },
-    //   1024: {
-    //     slidesPerView: 5,
-    //     spaceBetween: 50,
-    //   },
-    // },
-
-    // And if we need scrollbar
-    // scrollbar: {
-    //   el: '.swiper-scrollbar',
-    // },
-  };
-
-  const swiper = new Swiper(`.swiper`, swiperConfig);
+  customElements.define("astro-carousel", AstroCarousel);
 </script>
