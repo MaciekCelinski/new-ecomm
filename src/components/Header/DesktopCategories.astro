@@ -6,9 +6,9 @@ const rawCategories = await categoryStore.then();
 const categories = rawCategories.slice(0, 4);
 ---
 
-<div class="h-full flex max-w-fit gap-4">
+<div id="categories" class="h-full flex max-w-fit gap-4">
   <p
-    id="subcategories"
+    id="subcategories-menu"
     class="h-full flex justify-center items-center text-xs text-velo-green font-semibold cursor-pointer"
   >
     Wszystkie kategorie <FaAngleDown />
@@ -23,47 +23,3 @@ const categories = rawCategories.slice(0, 4);
     ))
   }
 </div>
-
-
-<!-- import { useStore } from "@nanostores/react";
-import { useEffect } from "react";
-import { FaAngleDown } from "react-icons/fa6";
-import { navCategories } from "../../stores/NavigationStore";
-
-const DesktopCategory = () => {
-  const categories = useStore(navCategories);
-
-  const getCategories = async () => {
-    const response = await fetch("https://dummyjson.com/products/categories");
-
-    const rawCat = await response.json();
-    const cat = rawCat.slice(0, 4);
-    navCategories.set(cat);
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  return (
-    <div className="h-full flex max-w-fit gap-4">
-      <p
-        id="subcategories"
-        className="h-full flex justify-center items-center text-xs text-velo-green font-semibold cursor-pointer"
-      >
-        Wszystkie kategorie <FaAngleDown />
-      </p>
-      {categories.map((category: any) => {
-        return (
-          <a key={category.slug} href={`/listing/${category.slug}`}>
-            <p className="h-full flex justify-center items-center text-xs text-gray-400 font-semibold cursor-pointer">
-              {category.name}
-            </p>
-          </a>
-        );
-      })}
-    </div>
-  );
-};
-
-export default DesktopCategory; -->

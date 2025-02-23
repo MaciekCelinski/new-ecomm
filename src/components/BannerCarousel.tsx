@@ -38,7 +38,7 @@ const ImageCarousel = () => {
   return (
     <div className="overflow-hidden relative items">
       <div className="flex transition ease-out duration-400 ">
-        <img className="flex w-full" src={slides[current].imageUrl} />
+        <img className="flex w-full min-h-80" src={slides[current].imageUrl} />
       </div>
 
       <div className="hidden md:flex absolute top-0 h-full w-full justify-between items-center text-white px-5 text-3xl">

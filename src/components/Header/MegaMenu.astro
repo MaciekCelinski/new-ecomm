@@ -40,7 +40,7 @@ const subcategories = await categoryStore.then();
     }, 100);
   };
 
-  waitForElement("#subcategories", (subcategoriesEl:any) => {
+  waitForElement("#subcategories-menu", (subcategoriesEl:any) => {
     const megamenuEl = document.querySelector("#desktop-megamenu");
 
     subcategoriesEl?.addEventListener("mouseenter", () => toggleMegaMenu(megamenuEl, true));

@@ -11,6 +11,8 @@ import "../../styles/SwiperCustomStyles.css";
 import { Pagination, Navigation } from "swiper/modules";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import { isMobile } from "../../stores/NavigationStore";
+import { useStore } from "@nanostores/react";
 
 const ProductCarouselReact = ({
   category,
@@ -22,6 +24,7 @@ const ProductCarouselReact = ({
   sideText?: boolean;
 }) => {
   const [products, setProducts] = useState<any>(null);
+  const $isMobile = useStore(isMobile)
 
   useEffect(() => {
     fetch(`https://dummyjson.com/products/category/${category}`)
@@ -37,7 +40,7 @@ const ProductCarouselReact = ({
         <div
           className={`space-y-4 rounded-lg border border-gray-200 ${
             color ? "bg-" + color : "bg-white"
-          } p-4 shadow-sm sm:px-6 sm:pb-2 ms:pt-4`}
+          } p-4 shadow-sm sm:px-6 sm:pb-8 ms:pt-4`}
         >
           <div className="flex justify-between my-8">
             <p className="text-3xl">{category}</p>
@@ -45,8 +48,8 @@ const ProductCarouselReact = ({
               Zobacz więcej
             </a>
           </div>
-          <div className={`${sideText ? "grid grid-cols-[35%_65%]" : "grid"}`}>
-            {sideText && (
+          <div className={`${$isMobile ? "flex flex-col" : sideText ? "grid grid-cols-[35%_65%]" : "grid"}`}>
+            {sideText && !$isMobile && (
               <div className="p-4">
                 <h4 className="text-2xl">Lorem Ipsum</h4>
                 <p className="pt-4">
@@ -62,7 +65,7 @@ const ProductCarouselReact = ({
               </div>
             )}
             <Swiper
-              slidesPerView={sideText ? 3 : 5}
+              slidesPerView={$isMobile ? 1 : sideText ? 3 : 5}
               spaceBetween={30}
               // pagination={true}
               navigation={true}

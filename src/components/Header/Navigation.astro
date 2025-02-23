@@ -7,7 +7,7 @@ import NavigationIcons from "./NavigationIcons.astro";
 ---
 
 <!-- MOBILE NAVIGATION -->
-<header id="mobile-navigation" class="block md:hidden">
+<div id="mobile-navigation" class="block md:hidden">
   <div
     class="w-full flex flex-col justify-center items-center pt-3 bg-white border-b-1"
   >
@@ -27,10 +27,10 @@ import NavigationIcons from "./NavigationIcons.astro";
       <SearchInput />
     </div>
   </div>
-</header>
+</div>
 
 <!-- DESKTOP NAVIGATION -->
-<header id="desktop-navigation" class="hidden md:block">
+<div id="desktop-navigation" class="hidden md:block">
   <div
     class="absulte w-full h-17 flex justify-center items-center bg-white border-b-1 border-b-gray-200"
   >
@@ -47,26 +47,40 @@ import NavigationIcons from "./NavigationIcons.astro";
       <div class="w-full flex justify-center">
         <SearchInput />
       </div>
-      <NavigationIcons/>
+      <NavigationIcons />
     </div>
   </div>
   <div>
-    <div class="h-12 pl-[15%] -mt-1 bg-white">
-      
-        <DesktopCategories server:defer>
+    <div id="categories-menu" class="h-12 pl-[15%] -mt-1 bg-white">
+      <DesktopCategories server:defer>
         <!-- <DesktopCategories client:only> -->
-          <div
-            role="status"
-            class="flex justify-center items-center animate-pulse"
-            slot="fallback"
-          >
-            <div class="h-3 bg-gray-200 rounded-full w-96"></div>
-          </div>
-        </DesktopCategories>
-      
+        <div
+          role="status"
+          class="flex justify-center items-center animate-pulse"
+          slot="fallback"
+        >
+          <div class="h-3 bg-gray-200 rounded-full w-96"></div>
+        </div>
+      </DesktopCategories>
     </div>
   </div>
-</header>
+</div>
 
 <!-- MEGAMENU -->
 <MegaMenu server:defer />
+
+<script>
+  const categories: HTMLElement | null =
+    document.querySelector("#categories-menu");
+  let position = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY - position > 60) {
+      position = window.scrollY;
+      categories!.style.display = "none";
+    } else if (position - window.scrollY > 60) {
+      categories!.style.display = "block";
+      position = window.scrollY;
+    }
+  });
+</script>

@@ -11,7 +11,7 @@ const response = await fetch(
 const results = await response.json();
 ---
 
-<astro-greet data-category={category} data-spv={SPV} data-index={index}>
+<astro-element data-category={category} data-spv={SPV} data-index={index}>
   <div class="mx-auto mt-6 max-w-full flex-1 space-y-6 lg:mt-0 lg:w-full">
     <div
       class:list={[
@@ -71,7 +71,7 @@ const results = await response.json();
       </div>
     </div>
   </div>
-</astro-greet>
+</astro-element>
 
 <style>
   /* .swiper-wrapper {
@@ -104,14 +104,14 @@ padding: 8px; */
   let index = 0;
   let category = "";
 
-  class AstroGreet extends HTMLElement {
+  class AstroElement extends HTMLElement {
     connectedCallback() {
       category = this.dataset.category!;
       spv = Number(this.dataset.spv);
     }
   }
 
-  customElements.define("astro-greet", AstroGreet);
+  customElements.define("astro-element", AstroElement);
 
   const swiperConfig = {
     modules: [Navigation, Pagination],

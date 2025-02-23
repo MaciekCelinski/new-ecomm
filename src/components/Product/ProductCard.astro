@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import AddToCartBtn from "../AddToCartBtn";
+// import AddToCartBtn from "../AddToCartBtn";
+import AddToCartBtn from "../AddToCartBtn.astro";
 import PageLoader from "../PageLoader.astro"
 import AddToFavoritesBtn from "../AddToFavoritesBtn";
 
@@ -90,8 +91,8 @@ const { product } = Astro.props;
         </span>
       </p>
     </div>
-    <!-- <AddToCartBtn product={product} server:defer> -->
-    <AddToCartBtn product={product} client:only >
+    <AddToCartBtn product={product} server:defer>
+    <!-- <AddToCartBtn product={product} client:only >
       <div
         role="status"
         class="flex justify-center items-center animate-pulse"
@@ -99,6 +100,6 @@ const { product } = Astro.props;
       >
         <div class="mt-2 mb-5 w-full h-10 bg-gray-200 rounded-md"></div>
       </div>
-    </AddToCartBtn>
+    </AddToCartBtn> -->
   </div>
 </div>

@@ -2,35 +2,38 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import BannerCarousel from "../components/BannerCarousel";
 import CategoryButtons from "../components/CategoryButtons.astro";
-import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
+// import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
 import ProductCarouselReact from "../components/Product/ProductsCarousel";
-import Footer from "../components/Footer.astro";
+
 ---
 
 <MainLayout title="Strona główna">
   <BannerCarousel client:only />
-  <div class="w-full m-auto max-w-[1440px] flex flex-col mt-24 gap-12">
+  <main class="w-full m-auto max-w-[1440px] flex flex-col mt-24 gap-12">
     <!-- <CategoryButtons client:only> -->
-    <CategoryButtons server:defer>
-      <div
-        role="status"
-        class="flex justify-center items-center animate-pulse"
-        slot="fallback"
-      >
-        <div class="h-3 bg-gray-200 rounded-full w-96"></div>
-      </div>
-    </CategoryButtons>
-    <ProductCarouselReact category="furniture" client:only />
-    <ProductCarouselReact category="groceries" client:only />
-    <ProductCarouselReact
-      category="beauty"
-      color="velo-green"
-      sideText={true}
-      client:only
-    />
+    <section id="category-btns" class="hidden md:flex">
+      <CategoryButtons server:defer>
+        <div
+          role="status"
+          class="flex justify-center items-center animate-pulse"
+          slot="fallback"
+        >
+          <div class="h-3 bg-gray-200 rounded-full w-96"></div>
+        </div>
+      </CategoryButtons>
+    </section>
+    <section id="carousels" class="flex flex-col gap-4 md:gap-12">
+      <ProductCarouselReact category="furniture" client:only />
+      <ProductCarouselReact category="groceries" client:only />
+      <ProductCarouselReact
+        category="beauty"
+        color="velo-green"
+        sideText={true}
+        client:only
+      />
+    </section>
     <!-- <ProductsCarousel category="furniture" />
     <ProductsCarousel category="fragrances" />
     <ProductsCarousel category="beauty" color="velo-green" sideText={true} /> -->
-  </div>
-  <Footer />
+  </main>
 </MainLayout>

@@ -1,0 +1,82 @@
+---
+import { CgSpinnerTwo } from "react-icons/cg";
+import { FaCartShopping } from "react-icons/fa6";
+
+const { product } = Astro.props;
+---
+
+<astro-element data-product={"product-" + product.id}>
+  <div id={`product-${product.id}`}>
+    <button
+      disabled
+      type="button"
+      class="adding-btn w-full hidden items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white cursor-progress"
+    >
+      <CgSpinnerTwo className=" text-xl animate-spin mr-2" /> Dodawanie...
+    </button>
+    <button
+      class="add-to-cart-btn w-full flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 cursor-pointer"
+    >
+      <FaCartShopping className="text-xl mr-4" /> Dodaj do koszyka
+    </button>
+  </div>
+</astro-element>
+
+<script>
+import { cartProductsCount } from "../stores/NavigationStore";
+
+  async function addToCart (id:any) {
+        return fetch("https://dummyjson.com/carts/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: 1,
+          products: [
+            {
+              id: id,
+              quantity: 1,
+            },
+          ],
+        }),
+      })
+      }
+
+
+  class AstroElement extends HTMLElement {
+    connectedCallback() {
+      const elementId = this.dataset.product;
+      const product = document.querySelector(`#${elementId}`);
+      const addToCartBtn: HTMLElement | null | undefined =
+        product?.querySelector(".add-to-cart-btn");
+      const addingBtn: HTMLElement | null | undefined =
+        product?.querySelector(".adding-btn");
+
+      addToCartBtn?.addEventListener("click", async () => {
+        addToCartBtn.style.display = "none";
+        addingBtn!.style.display = "flex";
+
+        const response = await addToCart(elementId);
+        const result = await response.json();
+        cartProductsCount.set(cartProductsCount.get() + 1);
+
+        addToCartBtn.style.display = "flex";
+        addingBtn!.style.display = "none";
+
+      });
+    }
+  }
+
+  customElements.define("astro-element", AstroElement);
+
+  {
+    /* //
+  // const productId = this.dataset.productId
+  // const product = document.querySelector(`.${this.dataset.productId}`)
+  // const addToCartBtns: NodeListOf<HTMLElement> = document.querySelectorAll(".add-to-cart-btn");
+  // const addingBtns: NodeListOf<HTMLElement> = document.querySelectorAll(".adding-btn");
+  // console.log('addToCartBtn', addToCartBtns);
+  // addToCartBtns.forEach((btn: HTMLElement) => btn.addEventListener('click', () => {
+  //   btn.style.display = 'none';
+  // })) */
+  }
+</script>
