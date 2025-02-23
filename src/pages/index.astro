@@ -1,13 +1,15 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import BannerCarousel from "../components/BannerCarousel";
+// import BannerCarousel from "../components/BannerCarousel";
+import BannerCarousel from "../components/BannerCarousel.astro";
 import CategoryButtons from "../components/CategoryButtons.astro";
 import ProductsCarousel from "../components/Product/ProductsCarousel.astro";
 import ProductCarouselReact from "../components/Product/ProductsCarousel";
 ---
 
 <MainLayout title="Strona główna">
-  <BannerCarousel client:only />
+  <!-- <BannerCarousel client:only /> -->
+  <BannerCarousel server:defer />
   <main class="w-full m-auto max-w-[1440px] flex flex-col mt-24 gap-12">
     <!-- <CategoryButtons client:only> -->
     <section id="category-btns" class="hidden md:flex">
@@ -32,9 +34,9 @@ import ProductCarouselReact from "../components/Product/ProductsCarousel";
       />
     </section> -->
     <section id="carousels" class="flex flex-col gap-4 md:gap-12">
-      <ProductsCarousel category="furniture" />
-      <ProductsCarousel category="mens-watches" />
-      <ProductsCarousel category="beauty" color="velo-green" sideText={true} />
+      <ProductsCarousel category="furniture" server:defer/>
+      <ProductsCarousel category="mens-watches" server:defer/>
+      <ProductsCarousel category="beauty" color="velo-green" sideText={true} server:defer/>
     </section>
   </main>
 </MainLayout>

@@ -1,0 +1,90 @@
+---
+import { Picture } from "astro:assets";
+
+const slidesDesktop = [
+  {
+    imageUrl:
+      "https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-118763.jpg?t=st=1739443839~exp=1739447439~hmac=b8a1078ad68dcf30a1c065abebda7e3226ffc4c31d5aa7cba461f2d7c6449b4d&w=1800",
+    pageUrl: "/",
+    message: "Banner 1",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-132679.jpg?t=st=1739447522~exp=1739451122~hmac=f09c1de5415c4c45c5d2e9a9b4a09fff81bb275cea4b699ffd6546b8cd571ac8&w=1800",
+    pageUrl: "/",
+    message: "Banner 2",
+  },
+  {
+    imageUrl:
+      "https://img.freepik.com/free-photo/lovely-romantic-cute-redhead-woman-prepared-gift-valentines-day-wrapped-present-pink-pape_1258-132697.jpg?t=st=1739444038~exp=1739447638~hmac=9f2870fadd95fa403e3f385794dc8abfd24d5c4bbd88692a78ca50087fa06129&w=1800",
+    pageUrl: "/",
+    message: "Banner 3",
+  },
+];
+---
+
+<astro-banner-carousel>
+  <div class=`swiper swiper-banner w-full`>
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {
+        slidesDesktop.map((slide: any) => (
+          <div class="swiper-slide mb-6">
+            <Picture
+              class={"w-full"}
+              src={slide.imageUrl}
+              alt="product image"
+              format="avif"
+              inferSize={true}
+            />
+            {/* <img src={slide.imageUrl} /> */}
+          </div>
+        ))
+      }
+    </div>
+    <div class="swiper-pagination !-bottom-1"></div>
+    <div
+      class="swiper-button swiper-button-prev rounded-full !text-black border border-gray-200 bg-white p-6 shadow-sm"
+    >
+    </div>
+    <div
+      class="swiper-button swiper-button-next rounded-full !text-black border border-gray-200 bg-white p-6 shadow-sm"
+    >
+    </div>
+  </div>
+</astro-banner-carousel>
+
+<style>
+  .swiper-button::after {
+    font-size: 24px;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Pagination, Navigation } from "swiper/modules";
+  import "swiper/css/bundle";
+
+  class AstroBannerCarousel extends HTMLElement {
+    connectedCallback() {
+      const swiperConfig = {
+        modules: [Pagination, Navigation],
+        // loop: true,
+        slidesPerView: 1,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      };
+
+      const swiper = new Swiper(`.swiper-banner`, swiperConfig);
+    }
+  }
+
+  customElements.define("astro-banner-carousel", AstroBannerCarousel);
+</script>

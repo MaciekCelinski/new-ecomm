@@ -11,7 +11,7 @@ const response = await fetch(
 const results = await response.json();
 ---
 
-<astro-carousel data-category={category} data-spv={SPV}>
+<astro-product-carousel data-category={category} data-spv={SPV}>
   <div class="mx-auto mt-6 max-w-full flex-1 space-y-6 lg:mt-0 lg:w-full">
     <div
       class:list={[
@@ -77,7 +77,7 @@ const results = await response.json();
       </div>
     </div>
   </div>
-</astro-carousel>
+</astro-product-carousel>
 
 <style>
   /* .swiper-wrapper {
@@ -109,7 +109,7 @@ padding: 8px; */
 
   let category = "";
 
-  class AstroCarousel extends HTMLElement {
+  class AstroProductCarousel extends HTMLElement {
     connectedCallback() {
       category = this.dataset.category!;
 
@@ -165,5 +165,5 @@ padding: 8px; */
     }
   }
 
-  customElements.define("astro-carousel", AstroCarousel);
+  customElements.define("astro-product-carousel", AstroProductCarousel);
 </script>
