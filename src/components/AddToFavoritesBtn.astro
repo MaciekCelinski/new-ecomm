@@ -1,0 +1,32 @@
+---
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
+const { product } = Astro.props;
+---
+
+<astro-add-to-favorites
+  id={`favorites-${product.id}`}
+  data-productId={product.id}
+>
+  <FaHeart className="fa-heart hidden cursor-pointer text-xl text-red-800" />
+  <FaRegHeart className="fa-reg-heart cursor-pointer text-xl" />
+</astro-add-to-favorites>
+
+<script>
+  class AstroAddToFavorites extends HTMLElement {
+    connectedCallback() {
+      const productId = this.dataset.productid;
+      const heartElement = document.querySelector(`#favorites-${productId}`);
+      const heartEmpty: HTMLElement | null | undefined =
+        heartElement?.querySelector(".fa-reg-heart");
+      const heartFull: HTMLElement | null | undefined =
+        heartElement?.querySelector(".fa-heart");
+
+      heartElement?.addEventListener("click", () => {
+        heartEmpty?.classList.toggle("hidden");
+        heartFull?.classList.toggle("hidden");
+      });
+    }
+  }
+
+  customElements.define("astro-add-to-favorites", AstroAddToFavorites);
+</script>
