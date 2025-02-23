@@ -3,13 +3,13 @@ import { FaRegHeart, FaHeart } from "react-icons/fa6";
 const { product } = Astro.props;
 ---
 
-<astro-add-to-favorites
+<astro-add-to-favorites-element
   id={`favorites-${product.id}`}
   data-productId={product.id}
 >
   <FaHeart className="fa-heart hidden cursor-pointer text-xl text-red-800" />
   <FaRegHeart className="fa-reg-heart cursor-pointer text-xl" />
-</astro-add-to-favorites>
+</astro-add-to-favorites-element>
 
 <script>
   class AstroAddToFavorites extends HTMLElement {
@@ -28,5 +28,5 @@ const { product } = Astro.props;
     }
   }
 
-  customElements.define("astro-add-to-favorites", AstroAddToFavorites);
+  customElements.get('astro-add-to-favorites-element') || customElements.define('astro-add-to-favorites-element', AstroAddToFavorites);
 </script>

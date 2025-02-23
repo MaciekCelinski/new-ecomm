@@ -9,11 +9,11 @@ import ProductCarouselReact from "../components/Product/ProductsCarousel";
 
 <MainLayout title="Strona główna">
   <!-- <BannerCarousel client:only /> -->
-  <BannerCarousel server:defer />
+  <BannerCarousel />
   <main class="w-full m-auto max-w-[1440px] flex flex-col mt-24 gap-12">
     <!-- <CategoryButtons client:only> -->
     <section id="category-btns" class="hidden md:flex">
-      <CategoryButtons server:defer>
+      <CategoryButtons >
         <div
           role="status"
           class="flex justify-center items-center animate-pulse"

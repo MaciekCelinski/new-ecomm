@@ -1,26 +1,9 @@
 ---
 import { Picture } from "astro:assets";
 
-const slidesDesktop = [
-  {
-    imageUrl:
-      "https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-118763.jpg?t=st=1739443839~exp=1739447439~hmac=b8a1078ad68dcf30a1c065abebda7e3226ffc4c31d5aa7cba461f2d7c6449b4d&w=1800",
-    pageUrl: "/",
-    message: "Banner 1",
-  },
-  {
-    imageUrl:
-      "https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-132679.jpg?t=st=1739447522~exp=1739451122~hmac=f09c1de5415c4c45c5d2e9a9b4a09fff81bb275cea4b699ffd6546b8cd571ac8&w=1800",
-    pageUrl: "/",
-    message: "Banner 2",
-  },
-  {
-    imageUrl:
-      "https://img.freepik.com/free-photo/lovely-romantic-cute-redhead-woman-prepared-gift-valentines-day-wrapped-present-pink-pape_1258-132697.jpg?t=st=1739444038~exp=1739447638~hmac=9f2870fadd95fa403e3f385794dc8abfd24d5c4bbd88692a78ca50087fa06129&w=1800",
-    pageUrl: "/",
-    message: "Banner 3",
-  },
-];
+const response = await fetch("http://localhost:3000/banners");
+const data = await response.json();
+const banners = data;
 ---
 
 <astro-banner-carousel>
@@ -29,7 +12,7 @@ const slidesDesktop = [
     <div class="swiper-wrapper">
       <!-- Slides -->
       {
-        slidesDesktop.map((slide: any) => (
+        banners.map((slide: any) => (
           <div class="swiper-slide mb-6">
             <Picture
               class={"w-full"}

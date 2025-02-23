@@ -5,7 +5,7 @@ import { FaCartShopping } from "react-icons/fa6";
 const { product } = Astro.props;
 ---
 
-<astro-element data-product={"product-" + product.id}>
+<astro-add-to-cart-element data-product={"product-" + product.id}>
   <div id={`product-${product.id}`}>
     <button
       disabled
@@ -20,7 +20,7 @@ const { product } = Astro.props;
       <FaCartShopping className="text-xl mr-4" /> Dodaj do koszyka
     </button>
   </div>
-</astro-element>
+</astro-add-to-cart-element>
 
 <script>
 import { cartProductsCount } from "../stores/NavigationStore";
@@ -66,5 +66,5 @@ import { cartProductsCount } from "../stores/NavigationStore";
     }
   }
 
-  customElements.define("astro-element", AstroElement);
+  customElements.define("astro-add-to-cart-element", AstroElement);
 </script>
