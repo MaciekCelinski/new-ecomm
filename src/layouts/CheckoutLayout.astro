@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+
+import Footer from "../components/Footer.astro";
+
+const { title = "page title" } = Astro.props;
+
+interface Props {
+  title?: string;
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>VeloMarket.pl | {title}</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        background-color: rgb(247, 247, 247);
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-0 z-30">
+    </header>
+    <slot />
+    <Footer />
+    <script>
+      import { setIsMobile } from "../utils/ClientUtils";
+      setIsMobile();
+    </script>
+  </body>
+</html>

@@ -23,24 +23,23 @@ const { product } = Astro.props;
 </astro-add-to-cart-element>
 
 <script>
-import { cartProductsCount } from "../stores/NavigationStore";
+  import { cartProductsCount } from "../stores/NavigationStore";
 
-  async function addToCart (id:any) {
-        return fetch("https://dummyjson.com/carts/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: 1,
-          products: [
-            {
-              id: id,
-              quantity: 1,
-            },
-          ],
-        }),
-      })
-      }
-
+  async function addToCart(id: any) {
+    return fetch("https://dummyjson.com/carts/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: 1,
+        products: [
+          {
+            id: id,
+            quantity: 1,
+          },
+        ],
+      }),
+    });
+  }
 
   class AstroElement extends HTMLElement {
     connectedCallback() {
@@ -61,7 +60,6 @@ import { cartProductsCount } from "../stores/NavigationStore";
 
         addToCartBtn.style.display = "flex";
         addingBtn!.style.display = "none";
-
       });
     }
   }

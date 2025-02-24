@@ -1,71 +1,98 @@
 ---
 import { Image } from "astro:assets";
+
 import AddToCartBtn from "../AddToCartBtn.astro";
-import PageLoader from "../PageLoader.astro"
-// import AddToFavoritesBtn from "../AddToFavoritesBtn";
-import AddToFavoritesBtn from "../AddToFavoritesBtn.astro"
+import PageLoader from "../Loader.astro";
+import AddToFavoritesBtn from "../AddToFavoritesBtn.astro";
 
 const { product } = Astro.props;
-
 ---
 
-<div
-  class="relative flex w-full justify-self-center max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
->
+<astro-product-card data-productid={product.id}>
   <div
-    class="relative mx-3 mt-3 flex justify-center h-60 overflow-hidden rounded-xl"
+    class={`product-card-${product.id} relative flex w-full justify-self-center max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md`}
   >
-    <a href={`/product/${product.id}`}>
+    <div
+      class="relative mx-3 mt-3 flex justify-center h-60 overflow-hidden rounded-xl"
+    >
+      <a href={`/product/${product.id}`}>
+        <div class="absolute top-[45%] left-[45%]">
+          <PageLoader />
+        </div>
+        <Image
+          class="product-image relative z-10 text-white"
+          src={product.images[0]}
+          alt="product image"
+          width={240}
+          height={240}
+          format="avif"
+          quality={"mid"}
+          densities={[1.5, 2]}
+        />
+      </a>
       <div
-        class="absolute top-[45%] left-[45%]"
+        class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white z-20"
       >
-      <PageLoader />
+        {product.discountPercentage}% OFF
       </div>
-      <Image
-        class="relative z-10 text-white"
-        src={product.images[0]}
-        alt="product image"
-        width={240}
-        height={240}
-        format="avif"
-        quality={"mid"}
-        densities={[1.5, 2]}
+      <div
+        class="absolute top-0 right-0 m-2 px-2 text-center text-sm font-medium z-20"
       >
-    </a>
-    <span
-      class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white z-20"
-    >
-      {product.discountPercentage}% OFF
-    </span>
-    <span
-      class="absolute top-0 right-0 m-2 px-2 text-center text-sm font-medium z-20"
-    >
-      <!-- <AddToFavoritesBtn product={product} client:only/> -->
-      <AddToFavoritesBtn product={product} />
-    </span>
-  </div>
-  <div class="mt-4 px-5 pb-5">
-    <a href={`/product/${product.id}`}>
-      <h5 class="text-lg tracking-tight truncate text-slate-900">
-        {product.title}
-      </h5>
-    </a>
-    <div class="mt-2 mb-5 flex items-center justify-between">
-      <p>
-        <span class="text-2xl font-bold text-slate-900 mr-1">
-          ${
-            Math.floor(
-              (product.price -
-                (product.price * product.discountPercentage) / 100) *
-                100
-            ) / 100
-          }
-        </span>
-        <span class="text-sm text-slate-900 line-through">
-          ${product.price}
-        </span>
-      </p>
+        <AddToFavoritesBtn product={product} />
+      </div>
     </div>
-    <AddToCartBtn product={product}>
+    <div class="mt-4 px-5 pb-5">
+      <a href={`/product/${product.id}`}>
+        <h5 class="text-lg tracking-tight truncate text-slate-900">
+          {product.title}
+        </h5>
+      </a>
+      <div class="mt-2 mb-5 flex items-center justify-between">
+        <p>
+          <span class="text-2xl font-bold text-slate-900 mr-1">
+            ${
+              Math.floor(
+                (product.price -
+                  (product.price * product.discountPercentage) / 100) *
+                  100
+              ) / 100
+            }
+          </span>
+          <span class="text-sm text-slate-900 line-through">
+            ${product.price}
+          </span>
+        </p>
+      </div>
+      <AddToCartBtn product={product} />
+    </div>
   </div>
-</div>
+</astro-product-card>
+
+<script>
+  class AstroProductCard extends HTMLElement {
+    connectedCallback() {
+      const id = this.dataset.productid;
+      const productCard = document.querySelector(`.product-card-${id}`);
+
+      const removeLoader = () => {
+        const productLoader: HTMLElement | null | undefined =
+          productCard?.querySelector(".loader");
+        productLoader!.style.display = "none";
+      };
+
+      if (productCard) {
+        const productImage: HTMLImageElement | null =
+          productCard?.querySelector(".product-image");
+        if (productImage && productImage.complete) {
+          removeLoader();
+        } else if (productImage) {
+          productImage.addEventListener("load", () => {
+            removeLoader();
+          });
+        }
+      }
+    }
+  }
+
+  customElements.define("astro-product-card", AstroProductCard);
+</script>

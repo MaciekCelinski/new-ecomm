@@ -1,12 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import MainLayout from "../../layouts/MainLayout.astro";
-import PageLoader from "../../components/PageLoader.astro";
+import PageLoader from "../../components/Loader.astro";
 
 const { id } = Astro.params;
 
 const productData = await fetch(`https://dummyjson.com/products/${id}`);
 const product = await productData.json();
+const checkLoad = () => {
+  console.log("hello");
+};
 ---
 
 <MainLayout>
@@ -15,9 +18,10 @@ const product = await productData.json();
       <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
         <div class="relative shrink-0 max-w-md lg:max-w-lg mx-auto">
           <div class="absolute top-[40%] left-[45%] z-0">
-            <PageLoader />
+            <PageLoader id=`${product.id}` />
           </div>
           <Image
+            id="product-image"
             class="relative z-10 text-white"
             src={product.images[0]}
             alt="product image"
@@ -141,3 +145,20 @@ const product = await productData.json();
     </div>
   </section>
 </MainLayout>
+
+<script>
+  const removeLoader = () => {
+    const loader: HTMLElement | null = document.querySelector(".velo-loader");
+    if (loader) loader.style.display = "none";
+  };
+
+  const productImage: HTMLImageElement | null =
+    document.querySelector("#product-image");
+  if (productImage && productImage.complete) {
+    removeLoader();
+  } else if (productImage) {
+    productImage?.addEventListener("load", () => {
+      removeLoader();
+    });
+  }
+</script>
