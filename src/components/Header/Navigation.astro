@@ -21,10 +21,10 @@ import NavigationIcons from "./NavigationIcons.astro";
           />
         </a>
       </div>
-      <NavigationIcons />
+      <NavigationIcons view="mobile"/>
     </div>
     <div class="flex justify-center py-3 w-3/4">
-      <SearchInput server:defer/>
+      <SearchInput server:defer />
     </div>
   </div>
 </div>
@@ -47,7 +47,7 @@ import NavigationIcons from "./NavigationIcons.astro";
       <div class="w-full flex justify-center">
         <SearchInput />
       </div>
-      <NavigationIcons />
+      <NavigationIcons view="desktop"/>
     </div>
   </div>
   <div>
@@ -70,6 +70,18 @@ import NavigationIcons from "./NavigationIcons.astro";
 <MegaMenu server:defer />
 
 <script>
+  import { isMobile } from "../../stores/NavigationStore";
+
+  // const isViewMobile = isMobile.get();
+  isMobile.subscribe((value) =>{
+    if(value !== null){
+      const mobileNav = document.querySelector("#mobile-navigation");
+      const desktopNav = document.querySelector("#desktop-navigation");
+
+      value ? desktopNav?.remove() : mobileNav?.remove();
+    }
+  });
+
   const categories: HTMLElement | null =
     document.querySelector("#categories-menu");
   let position = window.scrollY;

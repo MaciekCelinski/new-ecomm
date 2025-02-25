@@ -1,6 +1,8 @@
 ---
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
+
+const { view } = Astro.props;
 ---
 
 <div
@@ -10,9 +12,63 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
   <a href="/favorites">
     <FaRegHeart className="cursor-pointer" />
   </a>
-  <a href="/profile">
+  <button id=`user-btn-${view}` type="button">
     <FaRegUser className="cursor-pointer" />
-  </a>
+    <div
+      class="user-dropdown absolute top-16 right-6 hidden z-50 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700"
+    >
+      <ul
+        class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white"
+      >
+        <li>
+          <a
+            href="/account"
+            title=""
+            class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+          >
+            My Account
+          </a>
+        </li>
+        <li>
+          <a
+            href="/account/orders"
+            title=""
+            class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+          >
+            My Orders
+          </a>
+        </li>
+        <li>
+          <a
+            href="/account/settings"
+            title=""
+            class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+          >
+            Settings
+          </a>
+        </li>
+        <li>
+          <a
+            href="/account/addresses"
+            title=""
+            class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+          >
+            Delivery Addresses
+          </a>
+        </li>
+      </ul>
+
+      <div class="p-2 text-sm font-medium text-gray-900 dark:text-white">
+        <a
+          href="/"
+          title=""
+          class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+        >
+          Sign Out
+        </a>
+      </div>
+    </div>
+  </button>
   <a class="relative" href="/cart/2">
     <p
       id="cart-count"
@@ -22,6 +78,7 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
     </p>
     <FaCartShopping className="cursor-pointer" />
   </a>
+
   <AiOutlineMenu
     id="mobile-menu-hamburger"
     className="md:hidden cursor-pointer"
@@ -36,15 +93,15 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
   } from "../../stores/NavigationStore";
 
   let isViewMobile = isMobile.get();
-  let navElement
+  let navElement;
 
-  if(isViewMobile) navElement = document.querySelector("#mobile-navigation");
-  if(!isViewMobile) navElement = document.querySelector("#desktop-navigation");
+  if (isViewMobile) navElement = document.querySelector("#mobile-navigation");
+  if (!isViewMobile) navElement = document.querySelector("#desktop-navigation");
 
   const cartCount = navElement?.querySelector("#cart-count");
 
   cartProductsCount.subscribe((value) => {
-    if(value === 1) cartCount?.classList.remove('hidden')
+    if (value === 1) cartCount?.classList.remove("hidden");
     if (cartCount) cartCount.textContent = value.toString();
   });
 
@@ -53,4 +110,17 @@ import { FaCartShopping, FaRegHeart, FaRegUser } from "react-icons/fa6";
   mobileMenuHamburger?.addEventListener("click", () =>
     isMobileMenuOpen.set(true)
   );
+
+  const btn: HTMLElement | null = document.querySelector("#user-btn-desktop");
+  const dropdown: HTMLElement | null | undefined =
+    btn?.querySelector(".user-dropdown");
+
+  btn?.addEventListener("click", () => dropdown?.classList.toggle("hidden"));
+  btn?.addEventListener("blur", (e) => {
+    const relatedTarget = e.relatedTarget as Element;
+    if (relatedTarget.localName === "a") {
+    } else {
+      dropdown?.classList.toggle("hidden");
+    }
+  });
 </script>
